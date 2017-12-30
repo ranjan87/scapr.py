@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>scrapper.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,0); }
+.s1 { color: rgb(128,128,128); font-style: italic; }
+.s2 { color: rgb(0,0,128); font-weight: bold; }
+.s3 { color: rgb(0,128,128); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+scrapper.py</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0"> 
+ 
+</span><span class="s1">###niranjan singh</span><span class="s0"> 
+</span><span class="s1">##bnjan_raj@yahoo.co.in</span><span class="s0"> 
+</span><span class="s1">###@echo off</span><span class="s0"> 
+</span><span class="s1">### python [path]</span><span class="s0"> 
+</span><span class="s1">###apply task schedular .bat file to as script to trigger schedule...</span><span class="s0"> 
+ 
+</span><span class="s2">import </span><span class="s0">requests 
+ 
+ 
+</span><span class="s2">from </span><span class="s0">bs4 </span><span class="s2">import </span><span class="s0">BeautifulSoup 
+</span><span class="s2">import </span><span class="s0">mysql.connector 
+ 
+ 
+ 
+page=requests.get(</span><span class="s3">&quot;http://www.stackoverflow.com/&quot;</span><span class="s0">) 
+page.content 
+ 
+soup= BeautifulSoup(page.content, </span><span class="s3">'html.parser'</span><span class="s0">) 
+ 
+ 
+</span><span class="s2">for </span><span class="s0">row </span><span class="s2">in </span><span class="s0">soup.find_all(</span><span class="s3">'a'</span><span class="s0">, attrs={</span><span class="s3">'class' </span><span class="s0">: </span><span class="s3">'question-hyperlink'</span><span class="s0">}): 
+    print(</span><span class="s3">'row text value: ' </span><span class="s0">+ row.text) 
+ 
+    cnx=mysql.connector.connect(host=</span><span class="s3">''</span><span class="s0">,user=</span><span class="s3">''</span><span class="s0">,password=</span><span class="s3">''</span><span class="s0">,database=</span><span class="s3">''</span><span class="s0">) 
+ 
+    print(</span><span class="s3">'Inserting record: '</span><span class="s0">, row.text) 
+ 
+    cursor= cnx.cursor() 
+    add_question= </span><span class="s3">&quot;INSERT INTO test_tu (question) VALUES (%s)&quot;</span><span class="s0"> 
+    data_question= (str(row.text),) 
+    cursor.execute(add_question, data_question) 
+ 
+    cnx.commit() 
+    cursor.close() 
+    cnx.close() 
+ 
+ 
+ 
+ 
+ 
+</span></pre>
+</body>
+</html>
